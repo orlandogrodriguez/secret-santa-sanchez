@@ -1,0 +1,17 @@
+{
+  "participants": [
+    { "id": "dito", "name": "Orlando G. Rodriguez", "exclude": "cristina" },
+    { "id": "cristina", "name": "Cristina Sanchez", "exclude": "dito" },
+    { "id": "julian", "name": "Julian Rodriguez", "exclude": "alexandra" },
+    {
+      "id": "alexandra",
+      "name": "Alexandra Lopez De Victoria",
+      "exclude": "julian"
+    },
+    { "id": "isabel", "name": "Isabel Rodriguez", "exclude": "henry" },
+    { "id": "henry", "name": "Henry Del Carmen", "exclude": "isabel" },
+    { "id": "nivea", "name": "Nivea Requena", "exclude": "orlando" },
+    { "id": "orlando", "name": "Orlando Rodriguez Vila", "exclude": "nivea" }
+  ],
+  "developerId": "dito"
+}

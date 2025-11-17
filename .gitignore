@@ -1,0 +1,26 @@
+# Generated files
+dist/
+
+# Note: deploy/ folder is NOT ignored - it needs to be committed for GitHub Pages
+
+# Distribution files with passwords
+distribution.txt
+passwords.txt
+
+# Node modules (if any dependencies added later)
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+

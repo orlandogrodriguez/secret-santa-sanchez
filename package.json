@@ -1,0 +1,15 @@
+{
+  "name": "secret-santa-web-links",
+  "version": "1.0.0",
+  "description": "Lightweight secret Santa matching system with password-protected web pages",
+  "type": "module",
+  "main": "generator/generate.js",
+  "scripts": {
+    "generate": "node generator/generate.js",
+    "deploy": "node generator/generate.js && node generator/deploy.js"
+  },
+  "keywords": ["secret-santa", "gift-exchange"],
+  "author": "",
+  "license": "MIT"
+}
+
