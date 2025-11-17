@@ -2,8 +2,8 @@
   "participants": [
     { "id": "orly", "name": "Orlando Rodríguez", "exclude": ["titi", "jacky", "santi"] },
     { "id": "titi", "name": "Cristina Sánchez", "exclude": ["orly"] },
-    { "id": "gaby", "name": "Gabriela Sánchez", "exclude": ["enrico", "jacky", "santi"] },
-    { "id": "enrico", "name": "Enrico Rippe", "exclude": ["gaby"] },
+    { "id": "gaby", "name": "Gabriela Sánchez", "exclude": ["enrico"] },
+    { "id": "enrico", "name": "Enrico Rippe", "exclude": ["gaby", "jacky", "santi"] },
     { "id": "juanjo", "name": "Juan José Sánchez", "exclude": ["virgi"] },
     { "id": "virgi", "name": "Virginia Cruz", "exclude": ["juanjo", "jacky", "santi"] },
     { "id": "mario", "name": "Mario Sánchez", "exclude": ["sofi"] },
