@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 
 // GitHub Pages URL
-const SITE_URL = "https://orlandogrodriguez.github.io/secret-santa";
+const SITE_URL = "https://orlandogrodriguez.github.io/secret-santa-sanchez";
 
 // Read participants data
 function loadParticipants() {
