@@ -1,17 +1,20 @@
 {
   "participants": [
-    { "id": "dito", "name": "Orlando G. Rodriguez", "exclude": "cristina" },
-    { "id": "cristina", "name": "Cristina Sanchez", "exclude": "dito" },
-    { "id": "julian", "name": "Julian Rodriguez", "exclude": "alexandra" },
-    {
-      "id": "alexandra",
-      "name": "Alexandra Lopez De Victoria",
-      "exclude": "julian"
-    },
-    { "id": "isabel", "name": "Isabel Rodriguez", "exclude": "henry" },
-    { "id": "henry", "name": "Henry Del Carmen", "exclude": "isabel" },
-    { "id": "nivea", "name": "Nivea Requena", "exclude": "orlando" },
-    { "id": "orlando", "name": "Orlando Rodriguez Vila", "exclude": "nivea" }
+    { "id": "orly", "name": "Orlando Rodríguez", "exclude": ["titi", "jacky", "santi"] },
+    { "id": "titi", "name": "Cristina Sánchez", "exclude": ["orly"] },
+    { "id": "gaby", "name": "Gabriela Sánchez", "exclude": ["enrico", "jacky", "santi"] },
+    { "id": "enrico", "name": "Enrico Rippe", "exclude": ["gaby"] },
+    { "id": "juanjo", "name": "Juan José Sánchez", "exclude": ["virgi"] },
+    { "id": "virgi", "name": "Virginia Cruz", "exclude": ["juanjo", "jacky", "santi"] },
+    { "id": "mario", "name": "Mario Sánchez", "exclude": ["sofi"] },
+    { "id": "sofi", "name": "Sofía Piedrahita", "exclude": ["mario"] },
+    { "id": "juan", "name": "Juan Sánchez", "exclude": ["karina"] },
+    { "id": "karina", "name": "Karina Figueroa", "exclude": ["juan"] },
+
+    { "id": "jacky", "name": "Jacky Sánchez", "exclude": ["santi"] },
+    { "id": "santi", "name": "Santiago Marchan", "exclude": ["jacky"] },
+    { "id": "mamipeta", "name": "Nora Figueroa", "exclude": [] },
+    { "id": "maminori", "name": "Nora Cañarte", "exclude": [] }
   ],
-  "developerId": "dito"
+  "developerId": "orly"
 }

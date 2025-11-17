@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Santa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .greeting {
+            color: #667eea;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+        }
+
+        .password-form {
+            margin-bottom: 20px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .match-container {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .match-container.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .match-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .match-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .match-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .match-message {
+            font-size: 1rem;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .attempts-warning {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .attempts-warning.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .match-name {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎁 Secret Santa</h1>
+        <p class="greeting">Hi Gabriela Sánchez! Welcome to Coreillo Secret Santa!</p>
+        <p class="subtitle">Enter your password to reveal your match</p>
+
+        <div class="password-form">
+            <input
+                type="password"
+                id="passwordInput"
+                class="password-input"
+                placeholder="Enter your password"
+                autocomplete="off"
+            >
+            <button id="submitBtn" class="submit-btn">Reveal Match</button>
+            <div id="errorMessage" class="error-message"></div>
+            <div id="attemptsWarning" class="attempts-warning"></div>
+        </div>
+
+        <div id="matchContainer" class="match-container">
+            <div class="match-icon">🎄</div>
+            <div class="match-label">Your Secret Santa Match:</div>
+            <div id="matchName" class="match-name"></div>
+            <div class="match-message">
+                Happy gifting! Remember to keep this a secret until the exchange.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password hash and match data embedded by generator
+        const PASSWORD_HASH = '6f1e93ebb4c4a78620cf8941bb0abb1efe673a5400f1a2b6438037ae5095904a';
+        const MATCH_NAME = 'Cristina Sánchez';
+        const MAX_ATTEMPTS = 5;
+        const DEPLOYMENT_VERSION = '1763392179808';
+        const ATTEMPTS_KEY = `secret_santa_attempts_${DEPLOYMENT_VERSION}`;
+
+        const passwordInput = document.getElementById('passwordInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const matchContainer = document.getElementById('matchContainer');
+        const matchName = document.getElementById('matchName');
+        const attemptsWarning = document.getElementById('attemptsWarning');
+
+        // Get attempts from localStorage
+        function getAttempts() {
+            const attempts = localStorage.getItem(ATTEMPTS_KEY);
+            return attempts ? parseInt(attempts, 10) : 0;
+        }
+
+        // Save attempts to localStorage
+        function saveAttempts(count) {
+            localStorage.setItem(ATTEMPTS_KEY, count.toString());
+        }
+
+        // Reset attempts (for testing)
+        function resetAttempts() {
+            localStorage.removeItem(ATTEMPTS_KEY);
+        }
+
+        // Hash password using Web Crypto API
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        // Check password
+        async function checkPassword() {
+            const password = passwordInput.value.trim();
+
+            if (!password) {
+                showError('Please enter a password');
+                return;
+            }
+
+            const attempts = getAttempts();
+            if (attempts >= MAX_ATTEMPTS) {
+                showError(`Too many failed attempts. Please refresh the page and try again.`);
+                return;
+            }
+
+            const passwordHash = await hashPassword(password);
+
+            if (passwordHash === PASSWORD_HASH) {
+                // Correct password - reveal match
+                matchName.textContent = MATCH_NAME;
+                matchContainer.classList.add('show');
+                passwordInput.style.display = 'none';
+                submitBtn.style.display = 'none';
+                errorMessage.classList.remove('show');
+                attemptsWarning.classList.remove('show');
+                resetAttempts();
+            } else {
+                // Wrong password
+                const newAttempts = attempts + 1;
+                saveAttempts(newAttempts);
+
+                if (newAttempts >= MAX_ATTEMPTS) {
+                    showError(`Too many failed attempts. Please refresh the page and try again.`);
+                } else {
+                    const remaining = MAX_ATTEMPTS - newAttempts;
+                    showError(`Incorrect password. ${remaining} attempt${remaining !== 1 ? 's' : ''} remaining.`);
+                    if (remaining <= 2) {
+                        attemptsWarning.textContent = `Warning: ${remaining} attempt${remaining !== 1 ? 's' : ''} remaining before lockout.`;
+                        attemptsWarning.classList.add('show');
+                    }
+                }
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+        }
+
+        // Event listeners
+        submitBtn.addEventListener('click', checkPassword);
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Focus input on load
+        passwordInput.focus();
+    </script>
+</body>
+</html>
+
